@@ -1,0 +1,6 @@
+theme = TokyoNight
+background-opacity = 0.85
+background-blur = macos-glass-regular
+
+command = /opt/homebrew/bin/fish
+shell-integration-features = ssh-env,ssh-terminfo
