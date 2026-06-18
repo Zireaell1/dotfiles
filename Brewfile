@@ -1,13 +1,26 @@
+# User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
+# Distributed revision control system
 brew "git"
+# Execute binaries from Python packages in isolated environments
 brew "pipx"
+# Utility that provides fast incremental file transfer
+brew "rsync"
+# 3D creation suite
 cask "blender"
+# Voice and text chat software
 cask "discord"
+# Web browser
 cask "firefox"
+# Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Free and open-source image editor
 cask "gimp"
+# G-code generator for 3D printers
 cask "orcaslicer"
+# Imaging utility to install operating systems to a microSD card
 cask "raspberry-pi-imager"
+# Open-source code editor
 cask "visual-studio-code"
 vscode "github.vscode-github-actions"
 vscode "ms-python.debugpy"
