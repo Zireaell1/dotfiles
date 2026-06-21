@@ -4,7 +4,7 @@
     "chat.agent.enabled": false,
     "telemetry.feedback.enabled": false,
     "telemetry.telemetryLevel": "off",
-    "extensions.autoUpdate": false,
+    "extensions.autoUpdate": "off",
     "update.mode": "manual",
     "workbench.secondarySideBar.defaultVisibility": "hidden",
     "workbench.editor.empty.hint": "hidden",
