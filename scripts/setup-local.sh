@@ -13,7 +13,6 @@ set -euo pipefail
 GITLOCAL="$HOME/.gitconfig.local"
 SIGNERS="$HOME/.config/git/allowed_signers"
 SSHLOCAL="$HOME/.ssh/config.local"
-SIGNKEY_DEFAULT="$HOME/.ssh/id_ed25519_github_signing.pub"
 
 # shellcheck source=lib.sh source-path=SCRIPTDIR
 . "$(dirname "$0")/lib.sh"

@@ -10,6 +10,10 @@
 # shellcheck disable=SC2034  # used by the scripts that source this file
 REPO=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 
+# Git's signing key (public part) when ~/.gitconfig.local doesn't name one yet
+# shellcheck disable=SC2034  # used by the scripts that source this file
+SIGNKEY_DEFAULT="$HOME/.ssh/id_ed25519_github_signing.pub"
+
 # Colours only on a terminal, and not when NO_COLOR is set
 if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
     C_RESET=$'\033[0m' C_BOLD=$'\033[1m' C_DIM=$'\033[2m'
