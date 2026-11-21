@@ -6,6 +6,8 @@ brew "git"
 brew "pipx"
 # Utility that provides fast incremental file transfer
 brew "rsync"
+# Extremely fast Python package installer and resolver, written in Rust
+brew "uv"
 # 3D creation suite
 cask "blender"
 # Voice and text chat software
@@ -22,10 +24,16 @@ cask "orcaslicer"
 cask "raspberry-pi-imager"
 # Open-source code editor
 cask "visual-studio-code"
+vscode "charliermarsh.ruff"
 vscode "github.vscode-github-actions"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
 vscode "ms-python.vscode-python-envs"
+vscode "ms-toolsai.jupyter"
+vscode "ms-toolsai.jupyter-keymap"
+vscode "ms-toolsai.jupyter-renderers"
+vscode "ms-toolsai.vscode-jupyter-cell-tags"
+vscode "ms-toolsai.vscode-jupyter-slideshow"
 vscode "redhat.ansible"
 vscode "redhat.vscode-yaml"
