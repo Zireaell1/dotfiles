@@ -1,9 +1,6 @@
 # Named hosts live in ~/.ssh/config.local (not in the repo, made by scripts/setup-local.sh).
 Include ~/.ssh/config.local
 
-Host github.com
-  IdentityFile ~/.ssh/id_ed25519_github_signing
-
 Host *
   UseKeychain yes
   AddKeysToAgent yes

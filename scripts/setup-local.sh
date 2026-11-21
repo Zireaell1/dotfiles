@@ -90,13 +90,13 @@ HOSTS
     chmod 600 "$SSHLOCAL"
     say made "$(short "$SSHLOCAL") (commented example only: add your hosts there)"
 fi
-for key in "$HOME/.ssh/id_ed25519" "$HOME/.ssh/id_ed25519_github_signing"; do
-    if [ -f "$key.pub" ]; then
-        say found "key $(short "$key") ($(keyinfo "$key.pub"))"
-    else
-        say note "key $(short "$key") missing (named in the repo's ssh/config)"
-    fi
-done
+
+key="$HOME/.ssh/id_ed25519"
+if [ -f "$key.pub" ]; then
+    say found "key $(short "$key") ($(keyinfo "$key.pub"))"
+else
+    say note "key $(short "$key") missing (named in the repo's ssh/config)"
+fi
 
 HUSH="$HOME/.hushlogin"
 section "login message ($(short "$HUSH"))"
