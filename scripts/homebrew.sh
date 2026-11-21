@@ -26,7 +26,11 @@ INSTALLER=https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
 [ "$(id -u)" -ne 0 ] || { echo "Run as your user, not with sudo." >&2; exit 1; }
 [ -f "$BREWFILE" ] || { echo "No Brewfile at $BREWFILE." >&2; exit 1; }
 
-$DRY && section "dry run: nothing is changed"
+if $DRY; then
+    section "dry run: nothing is changed"
+    # brew bundle runs `brew update` first, which updates Homebrew itself: not in a dry run
+    export HOMEBREW_NO_AUTO_UPDATE=1
+fi
 
 section "command line tools"
 if xcode-select -p >/dev/null 2>&1; then
