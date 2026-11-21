@@ -1,0 +1,15 @@
+# Shared git settings. Identity and signing key are per machine:
+# ~/.gitconfig.local (not in the repo, made by scripts/setup-local.sh).
+[gpg]
+    format = ssh
+[gpg "ssh"]
+    allowedSignersFile = ~/.config/git/allowed_signers
+[commit]
+    gpgsign = true
+[tag]
+    gpgsign = true
+[user]
+    useConfigOnly = true
+
+[include]
+    path = ~/.gitconfig.local

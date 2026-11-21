@@ -1,6 +1,6 @@
 firefox/
-git/
-ssh/
 tmp/
 
 .DS_Store
+
+*.local
