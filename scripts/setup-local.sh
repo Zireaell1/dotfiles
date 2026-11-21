@@ -48,9 +48,9 @@ if [ -e "$GITLOCAL" ]; then
     say "" "  email      $(git config --file "$GITLOCAL" user.email || echo '(not set)')"
     say "" "  signingkey $(short "$(git config --file "$GITLOCAL" user.signingkey || echo '(not set)')")"
 else
-    name=$(ask "Git name" "$(id -un)")
+    name=$(ask "Git name" "$(git config --global user.name || id -un)")
     echo "       GitHub noreply address: Settings > Emails > 'Keep my email addresses private'"
-    email=$(ask "Git email" "")
+    email=$(ask "Git email" "$(git config --global user.email || true)")
     [ -n "$email" ] || { echo "An email is required." >&2; exit 1; }
     signkey=$(ask "SSH signing key (public part)" "$SIGNKEY_DEFAULT")
     signkey="${signkey/#\~/$HOME}"
