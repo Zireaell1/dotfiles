@@ -44,5 +44,17 @@
     "terminal.integrated.initialHint": false,
     "ansible.lightspeed.enabled": false,
     "ansible.lightspeed.suggestions.enabled": false,
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "basic",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "workbench.experimental.modernUI": true,
+    "yaml.disableSchemaDetection": [
+        "**/.github/workflows/*.yml",
+        "**/.github/workflows/*.yaml",
+        "**/.gitea/workflows/*.yml",
+        "**/.gitea/workflows/*.yaml",
+        "**/.forgejo/workflows/*.yml",
+        "**/.forgejo/workflows/*.yaml"
+    ],
+    "workbench.experimental.modernUIUppercaseViewHeaders": true,
+    "python.useEnvironmentsExtension": true
 }
