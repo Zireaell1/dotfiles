@@ -10,14 +10,15 @@
 
 set -euo pipefail
 
-REPO=$(cd "$(dirname "$0")/.." && pwd)
 GITLOCAL="$HOME/.gitconfig.local"
 SIGNERS="$HOME/.config/git/allowed_signers"
 SSHLOCAL="$HOME/.ssh/config.local"
 SIGNKEY_DEFAULT="$HOME/.ssh/id_ed25519_github_signing.pub"
 
+# say TAG MESSAGE: one aligned line per finding or action
 say() { printf '%-6s %s\n' "$1" "$2"; }
 
+# short PATH: ~ instead of $HOME, for display
 short() {
     case "$1" in
         "$HOME"*) printf '~%s\n' "${1#"$HOME"}" ;;
@@ -25,8 +26,10 @@ short() {
     esac
 }
 
+# keyinfo PUBFILE: "ED25519 SHA256:..." (type and fingerprint)
 keyinfo() { ssh-keygen -lf "$1" 2>/dev/null | awk '{ gsub(/[()]/, "", $NF); print $NF, $2 }' || echo "not a valid public key"; }
 
+# ask PROMPT DEFAULT -> answer on stdout (default when Enter is pressed)
 ask() {
     local answer
     if [ -n "$2" ]; then
@@ -81,6 +84,7 @@ else
         mkdir -p "$(dirname "$SIGNERS")"
         say made "$(short "$(dirname "$SIGNERS")")/"
     fi
+
     printf '%s namespaces="git" %s\n' "$email" "$(cut -d' ' -f1,2 "$signkey")" > "$SIGNERS"
     say made "$(short "$SIGNERS"): $email -> $(keyinfo "$signkey")"
 fi
@@ -122,16 +126,3 @@ else
     touch "$HUSH"
     say made "$(short "$HUSH") (empty)"
 fi
-
-echo "== links (made by hand / the install script, only checked here)"
-for pair in "$HOME/.gitconfig:$REPO/git/.gitconfig" "$HOME/.ssh/config:$REPO/ssh/config"; do
-    target="${pair%%:*}"
-    source="${pair#*:}"
-    if [ -L "$target" ] && [ "$(readlink "$target")" = "$source" ]; then
-        say ok "$(short "$target") -> $(short "$source")"
-    elif [ -e "$target" ] || [ -L "$target" ]; then
-        say note "$(short "$target") is not the repo's (the .local files above stay unused until it is)"
-    else
-        say note "$(short "$target") missing: ln -sfn $(short "$source") $(short "$target")"
-    fi
-done
