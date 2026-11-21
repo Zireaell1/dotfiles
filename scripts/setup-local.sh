@@ -50,9 +50,12 @@ signkey=$(git config --file "$GITLOCAL" user.signingkey || true)
 signkey="${signkey/#\~/$HOME}"
 if [ -e "$SIGNERS" ]; then
     signers=$(grep -v '^#' "$SIGNERS" | cut -d' ' -f1 | paste -sd, - || true)
-    say skip "exists, not changed: signers ${signers:-(none)}"
-    if [ -f "$signkey" ] && ! grep -qF "$(cut -d' ' -f2 "$signkey")" "$SIGNERS"; then
-        say note "your signing key $(short "$signkey") is NOT in it: git will not verify your own commits"
+    if [ ! -f "$signkey" ]; then
+        say skip "exists, not changed: signers ${signers:-(none)} (no signing key to compare)"
+    elif grep -qF "$(cut -d' ' -f2 "$signkey")" "$SIGNERS"; then
+        say ok "has your signing key (signers ${signers:-(none)})"
+    else
+        say note "exists, but your signing key $(short "$signkey") is NOT in it: git will not verify your own commits"
     fi
 elif [ -z "$email" ] || [ ! -f "$signkey" ]; then
     say note "no email or signing key yet; run this again once $(short "${signkey:-the key}") exists"
@@ -98,7 +101,7 @@ done
 HUSH="$HOME/.hushlogin"
 section "login message ($(short "$HUSH"))"
 if [ -e "$HUSH" ]; then
-    say skip "exists"
+    say ok "exists"
 else
     touch "$HUSH"
     say made "$(short "$HUSH") (empty)"

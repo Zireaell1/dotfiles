@@ -18,7 +18,12 @@ else
     C_RESET='' C_BOLD='' C_DIM='' C_GREEN='' C_YELLOW='' C_CYAN=''
 fi
 
-# say TAG MESSAGE: one aligned line per finding or action, coloured by tag
+# say TAG MESSAGE: one aligned line per finding or action, coloured by tag. Tags:
+#   made   something was created or changed        moved  a file was moved aside (.bak)
+#   ok     checked: already as it should be         skip   left alone on purpose, state not judged
+#   found  a fact worth showing (path, version)     note   needs your attention
+# ok vs skip: "ok" is a confirmation (it checked); "skip" only says nothing was done
+# (your file is not overwritten, not in the repo yet, dry run).
 say() {
     local c=''
     case "$1" in

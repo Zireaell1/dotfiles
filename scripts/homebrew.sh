@@ -59,7 +59,7 @@ eval "$("$BREW" shellenv bash)"
 section "analytics"
 state=$(brew analytics state 2>&1 || true)
 case "$state" in
-    *isabled*) say skip "already off" ;;
+    *isabled*) say ok "already off" ;;
     *)
         run brew analytics off
         say made "turned off"
@@ -68,7 +68,7 @@ esac
 
 section "Brewfile ($(short "$BREWFILE"))"
 if brew bundle check --no-upgrade --file "$BREWFILE" >/dev/null 2>&1; then
-    say skip "everything in it is installed"
+    say ok "everything in it is installed"
 else
     say note "missing:"
     brew bundle check --no-upgrade --verbose --file "$BREWFILE" 2>&1 | indent || true
