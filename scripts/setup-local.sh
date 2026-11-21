@@ -15,8 +15,27 @@ SIGNERS="$HOME/.config/git/allowed_signers"
 SSHLOCAL="$HOME/.ssh/config.local"
 SIGNKEY_DEFAULT="$HOME/.ssh/id_ed25519_github_signing.pub"
 
-# say TAG MESSAGE: one aligned line per finding or action
-say() { printf '%-6s %s\n' "$1" "$2"; }
+# Colours only on a terminal, and not when NO_COLOR is set
+if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
+    C_RESET=$'\033[0m' C_BOLD=$'\033[1m' C_DIM=$'\033[2m'
+    C_GREEN=$'\033[32m' C_YELLOW=$'\033[33m' C_CYAN=$'\033[36m'
+else
+    C_RESET='' C_BOLD='' C_DIM='' C_GREEN='' C_YELLOW='' C_CYAN=''
+fi
+
+# say TAG MESSAGE: one aligned line per finding or action, coloured by tag
+say() {
+    local c=''
+    case "$1" in
+        made | ok) c=$C_GREEN ;;
+        found) c=$C_CYAN ;;
+        note | moved) c=$C_YELLOW ;;
+        skip) c=$C_DIM ;;
+    esac
+    printf '%s%-6s%s %s\n' "$c" "$1" "$C_RESET" "$2"
+}
+# section TITLE: bold header
+section() { printf '%s== %s%s\n' "$C_BOLD" "$1" "$C_RESET"; }
 
 # short PATH: ~ instead of $HOME, for display
 short() {
@@ -41,7 +60,7 @@ ask() {
     fi
 }
 
-echo "== git identity ($(short "$GITLOCAL"))"
+section "git identity ($(short "$GITLOCAL"))"
 if [ -e "$GITLOCAL" ]; then
     say skip "exists, not changed:"
     say "" "  name       $(git config --file "$GITLOCAL" user.name || echo '(not set)')"
@@ -67,7 +86,7 @@ else
     say made "$(short "$GITLOCAL"): $name <$email>, key $(short "$signkey")"
 fi
 
-echo "== signature check ($(short "$SIGNERS"))"
+section "signature check ($(short "$SIGNERS"))"
 email=$(git config --file "$GITLOCAL" user.email || true)
 signkey=$(git config --file "$GITLOCAL" user.signingkey || true)
 signkey="${signkey/#\~/$HOME}"
@@ -89,7 +108,7 @@ else
     say made "$(short "$SIGNERS"): $email -> $(keyinfo "$signkey")"
 fi
 
-echo "== ssh hosts ($(short "$SSHLOCAL"))"
+section "ssh hosts ($(short "$SSHLOCAL"))"
 if [ ! -d "$HOME/.ssh" ]; then
     mkdir -p "$HOME/.ssh"
     chmod 700 "$HOME/.ssh"
@@ -119,7 +138,7 @@ for key in "$HOME/.ssh/id_ed25519" "$HOME/.ssh/id_ed25519_github_signing"; do
 done
 
 HUSH="$HOME/.hushlogin"
-echo "== login message ($(short "$HUSH"))"
+section "login message ($(short "$HUSH"))"
 if [ -e "$HUSH" ]; then
     say skip "exists"
 else

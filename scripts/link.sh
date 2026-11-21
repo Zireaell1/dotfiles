@@ -14,7 +14,27 @@ REPO=$(cd "$(dirname "$0")/.." && pwd)
 DRY=false
 [ "${1:-}" = "-n" ] && DRY=true
 
-say() { printf '%-6s %s\n' "$1" "$2"; }
+# Colours only on a terminal, and not when NO_COLOR is set
+if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
+    C_RESET=$'\033[0m' C_BOLD=$'\033[1m' C_DIM=$'\033[2m'
+    C_GREEN=$'\033[32m' C_YELLOW=$'\033[33m' C_CYAN=$'\033[36m'
+else
+    C_RESET='' C_BOLD='' C_DIM='' C_GREEN='' C_YELLOW='' C_CYAN=''
+fi
+
+# say TAG MESSAGE: one aligned line per finding or action, coloured by tag
+say() {
+    local c=''
+    case "$1" in
+        made | ok) c=$C_GREEN ;;
+        found) c=$C_CYAN ;;
+        note | moved) c=$C_YELLOW ;;
+        skip) c=$C_DIM ;;
+    esac
+    printf '%s%-6s%s %s\n' "$c" "$1" "$C_RESET" "$2"
+}
+# section TITLE: bold header
+section() { printf '%s== %s%s\n' "$C_BOLD" "$1" "$C_RESET"; }
 short() {
     case "$1" in
         "$HOME"*) printf '~%s\n' "${1#"$HOME"}" ;;
@@ -52,7 +72,7 @@ link() {
     say made "$(short "$dst") -> $1"
 }
 
-$DRY && echo "(dry run: nothing is changed)"
+$DRY && section "dry run: nothing is changed"
 
 [ -d "$HOME/.ssh" ] || { run mkdir -p "$HOME/.ssh"; run chmod 700 "$HOME/.ssh"; say made "$(short "$HOME/.ssh")/ (700)"; }
 
