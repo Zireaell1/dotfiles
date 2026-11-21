@@ -1,0 +1,8 @@
+# Login zsh
+
+# Homebrew on PATH (skipped until it's installed: homebrew.sh)
+[ -x /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+
+# pipx tools
+typeset -U path
+path=(~/.local/bin $path)
