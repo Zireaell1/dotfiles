@@ -26,10 +26,6 @@
 			"**/ghostty/config.ghostty": "ghostty > ${filename}",
 			"**/fish/config.fish": "fish > ${filename}.${extname}",
 			"**/fish/functions/*.fish": "fish fn > ${filename}"
-		},
-		"[fish]": {
-			"editor.tabSize": 4,
-			"editor.insertSpaces": true
 		}
 	}
 }
