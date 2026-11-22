@@ -4,6 +4,8 @@ brew "fish"
 brew "git"
 # Execute binaries from Python packages in isolated environments
 brew "pipx"
+# Fast, efficient and secure backup program
+brew "restic"
 # Utility that provides fast incremental file transfer
 brew "rsync"
 # Extremely fast Python package installer and resolver, written in Rust
