@@ -1,0 +1,12 @@
+# Folders and repos for scripts/workspace.sh. Paths are relative to ~.
+# dir   <path>
+# repo  <path>  <public git URL>
+
+dir   Dev
+dir   OrcaSlicer/Projects
+dir   OrcaSlicer/ExternalProjects
+dir   OrcaSlicer/Maintenance
+dir   GIMP/Projects
+
+repo  Dev/nova-homelab        https://github.com/Zireaell1/nova-homelab.git
+repo  Dev/nova-eink-display   https://github.com/Zireaell1/nova-eink-display.git
