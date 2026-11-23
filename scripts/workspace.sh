@@ -49,7 +49,7 @@ do_repo() {
     if [ ! -e "$dst" ]; then
         if $DRY; then
             say made "$(short "$dst") <- $url (dry run: not cloned)"
-        elif git clone --quiet "$url" "$dst"; then
+        elif git -c credential.helper= clone --quiet "$url" "$dst"; then
             say made "$(short "$dst") <- $url"
         else
             say note "clone of $url failed (private, renamed, or no network?)"
