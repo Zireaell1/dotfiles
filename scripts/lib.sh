@@ -38,6 +38,9 @@ say() {
         skip) c=$C_DIM ;;
     esac
     printf '%s%-6s%s %s\n' "$c" "$1" "$C_RESET" "$2"
+    if [ "$1" = note ] && [ -n "${INSTALL_NOTES:-}" ]; then
+        printf '%s: %s\n' "${INSTALL_STEP:-?}" "$2" >> "$INSTALL_NOTES"
+    fi
 }
 
 # section TITLE: bold header
